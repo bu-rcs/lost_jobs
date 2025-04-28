@@ -1,15 +1,21 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
+use Time::Piece;
 
 # Check if the input file and threshold value are provided
 if (@ARGV < 1) {
-    die "Usage: $0  <threshold_value>\n";
+    die "Usage: $0  <YYYY-MM-DD>\n    where is the date of the event.";
 }
 
 # Input file and threshold value
 my $file ="/usr/local/sge/common/accounting" ;
-my $threshold_value = $ARGV[0];
+my $date = $ARGV[0];
+
+# Convert Date to the epoch time:
+my $t = Time::Piece->strptime($date, '%Y-%m-%d');
+my $threshold_value = $t->epoch - 24*60*60;
+print "The epoch time for $date is $threshold_value\n";
 
 # Open the file for reading
 open my $fh, '<', $file or die "Could not open file '$file': $!\n";
