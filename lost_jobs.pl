@@ -1,18 +1,30 @@
 #!/usr/bin/perl
+# (c) Boston University
+# Author: Katia Bulekova
+# May, 2025
+#
 use strict;
 use warnings;
 use Time::Piece;
 
 # Check if the input file and threshold value are provided
 if (@ARGV < 1) {
-    die "Usage: $0  <YYYY-MM-DD>\n    where is the date of the event.";
+    die "Usage: $0  [-v] <YYYY-MM-DD>\n    where is the date of the event.";
 }
 
 # Input file and threshold value
+my $verbose = 0;   # Flag to enable verbose output
 my $file ="/usr/local/sge/common/accounting" ;
+
+if ($ARGV[0] eq '-v') {
+    $verbose = 1;
+    shift @ARGV;                # Remove the -v flag from @ARGV
+}
+
+# Get the date of the event
 my $date = $ARGV[0];
 
-# Convert Date to the epoch time:
+# Convert Date to the epoch time and subtract one calendar day:
 my $t = Time::Piece->strptime($date, '%Y-%m-%d');
 my $threshold_value = $t->epoch - 24*60*60;
 print "The epoch time for $date is $threshold_value\n";
@@ -47,7 +59,7 @@ while (my $line = <$fh>) {
         # Check if 10th and 11th fields contain zeros or "-"
         if (($fields[8] ne "0" ) && ($fields[9] eq "0" || $fields[9] eq "-") && ($fields[10] eq "0" || $fields[10] eq "-")) {
  
-	    print "$line";
+	    print "$line" if $verbose;
             # Update counts for the 4th column (unique user identification)
             my $user = $fields[3];
             $user_counts{$user}++;
