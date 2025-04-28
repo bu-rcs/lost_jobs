@@ -1,12 +1,11 @@
 # LOST Jobs
-Create a list of jobs that failed during the last power event  
-(c) Boston University
-*Author*: Katia Bulekova
+Create a list of jobs that failed during the last (power) event  
+(c) Boston University  
+*Author*: Katia Bulekova  
 
 ## Usage
 
 ```
-module load lost_jobs
 lost_jobs.pl [-v] 2025-04-27
 ```
 
