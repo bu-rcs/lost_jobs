@@ -7,9 +7,9 @@ Create a list of jobs that failed during the last power event
 
 ```
 module load lost_jobs
-lost_jobs.pl 1745500000 
+lost_jobs.pl 2025-04-27
 ```
 
-The command line argument is a Unix Timestamp (epoch time). Select a value that is a day or two earlier than the event itself.
+The command line argument is a date on wich the (power) event occur that caused the jobs to fail.
 
 
